@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.apuser.mymicroblogging"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="11"
+        android:targetSdkVersion="17" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="com.example.apuser.mymicroblogging.ui.activity.StatusActivity"
+            android:label="@string/status_update" >
+            <intent-filter>
+                <action android:name="com.marakana.android.yamba.action.tweet" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.example.apuser.mymicroblogging.ui.activity.MainActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.example.apuser.mymicroblogging.ui.activity.SettingsActivity"
+            android:label="@string/action_settings" >
+        </activity>
+        <activity android:name="com.example.apuser.mymicroblogging.ui.activity.DetailsActivity" >
+        </activity>
+
+        <provider
+            android:name="com.example.apuser.mymicroblogging.domain.provider.StatusProvider"
+            android:authorities="com.marakana.android.yamba.StatusProvider"
+            android:exported="false" />
+    </application>
+
+</manifest>
