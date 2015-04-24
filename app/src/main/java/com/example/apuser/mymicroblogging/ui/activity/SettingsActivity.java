@@ -13,9 +13,7 @@ public class SettingsActivity extends BaseActivity{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Check if this activity was created before
         if (savedInstanceState == null) {
-            // Create a fragment
             SettingsFragment fragment = new SettingsFragment();
             getFragmentManager()
                     .beginTransaction()

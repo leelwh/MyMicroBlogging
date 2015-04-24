@@ -5,6 +5,7 @@ import android.util.Log;
 import com.example.apuser.mymicroblogging.domain.model.Status;
 import com.example.apuser.mymicroblogging.domain.repository.StatusRepository;
 import com.example.apuser.mymicroblogging.domain.repository.api.mapper.StatusResponseMapper;
+import com.example.apuser.mymicroblogging.domain.repository.api.model.PostStatus;
 import com.example.apuser.mymicroblogging.domain.repository.api.model.ResponseStatus;
 import com.example.apuser.mymicroblogging.domain.repository.api.model.ResponseStatuses;
 
@@ -32,23 +33,19 @@ public class RetrofitStatusRepository implements StatusRepository{
 
     @Override
     public Subscription getStatusCollection(Observer<List<Status>> observer) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                responseStatuses = retrofitStatusService.getStatus();
-                Log.d("weihua.li", "run!");
-            }
-        }).start();
+        Subscription subscription = retrofitStatusService.getStatus()
+                .map(statuses -> statuses.getStatuses())
+                .flatMap(statusList -> Observable.from(statusList))
+                .map(new StatusResponseMapper())
+                .toList()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+        return subscription;
+    }
 
-//        Subscription subscription = Observable.just(responseStatuses)
-//                .map(statuses -> statuses.getStatuses())
-//                .flatMap(statusList -> Observable.from(statusList))
-//                .map(new StatusResponseMapper())
-//                .toList()
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(observer);
-//        return subscription;
-        return null;
+    @Override
+    public void postStatus(String status, String latitude, String longitude) {
+        retrofitStatusService.postStatus(status, latitude, longitude);
     }
 }

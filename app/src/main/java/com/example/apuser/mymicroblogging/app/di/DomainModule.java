@@ -97,6 +97,7 @@ public class DomainModule {
         return new RestAdapter.Builder()
                 .setClient(client)
                 .setErrorHandler(errorHandler)
+                .setLogLevel(RestAdapter.LogLevel.FULL)
                 .setConverter(new SimpleXmlConverter())
                 .setEndpoint(endpoint)
                 .build();

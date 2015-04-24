@@ -1,6 +1,6 @@
 package com.example.apuser.mymicroblogging.ui.activity;
 
-import android.app.Activity;
+
 import android.content.ContentValues;
 import android.content.Intent;
 import android.net.Uri;
@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.example.apuser.mymicroblogging.R;
 import com.example.apuser.mymicroblogging.app.BaseActivity;
@@ -51,7 +50,7 @@ public class MainActivity extends BaseActivity {
                 startActivity(new Intent(this, SettingsActivity.class));
                 return true;
             case R.id.action_tweet:
-                startActivity(new Intent("com.marakana.android.yamba.action.tweet"));
+                startActivity(new Intent("com.com.example.apuser.mymicroblogging.action.tweet"));
                 return true;
             case R.id.action_refresh:
                 refresh();
@@ -98,11 +97,6 @@ public class MainActivity extends BaseActivity {
                         Log.d(TAG,
                                 String.format("%s: %s", status.getUser(),
                                         status.getText()));
-                    }
-                    if (count > 0) {
-                        sendBroadcast(new Intent(
-                                "com.marakana.android.yamba.action.NEW_STATUSES").putExtra(
-                                "count", count));
                     }
                 }
             }
