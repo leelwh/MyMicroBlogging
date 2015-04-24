@@ -14,6 +14,7 @@
 
     <application
         android:allowBackup="true"
+        android:name="com.example.apuser.mymicroblogging.app.MyMicroBloggingApplication"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
@@ -39,10 +40,11 @@
         </activity>
         <activity android:name="com.example.apuser.mymicroblogging.ui.activity.DetailsActivity" >
         </activity>
-
+        <service android:name="com.example.apuser.mymicroblogging.domain.service.RefreshService" >
+        </service>
         <provider
             android:name="com.example.apuser.mymicroblogging.domain.provider.StatusProvider"
-            android:authorities="com.marakana.android.yamba.StatusProvider"
+            android:authorities="com.example.apuser.mymicroblogging.domain.provider.StatusProvider"
             android:exported="false" />
     </application>
 

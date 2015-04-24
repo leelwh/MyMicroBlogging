@@ -3,7 +3,9 @@ package com.example.apuser.mymicroblogging.app.di;
 import android.app.Application;
 import android.util.Log;
 
+import com.example.apuser.mymicroblogging.domain.repository.api.retrofit.RetrofitStatusRepository;
 import com.example.apuser.mymicroblogging.domain.repository.api.retrofit.RetrofitStatusService;
+import com.mobprofs.retrofit.converters.SimpleXmlConverter;
 import com.squareup.okhttp.Authenticator;
 import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.Credentials;
@@ -21,7 +23,9 @@ import dagger.Module;
 import dagger.Provides;
 import retrofit.Endpoint;
 import retrofit.Endpoints;
+import retrofit.ErrorHandler;
 import retrofit.RestAdapter;
+import retrofit.RetrofitError;
 import retrofit.client.Client;
 import retrofit.client.OkClient;
 
@@ -34,8 +38,16 @@ import retrofit.client.OkClient;
 )
 public class DomainModule {
     static final int DISK_CACHE_SIZE = 50 * 1024 * 1024; // 50MB
-    public static final String PRODUCTION_API_URL = "http://yamba.marakana.com/api";
-
+    public static final String PRODUCTION_API_URL = "http://yamba.marakana.com/api/";
+    class MyErrorHandler implements ErrorHandler {
+        @Override public Throwable handleError(RetrofitError cause) {
+            retrofit.client.Response r = cause.getResponse();
+            if (r != null && r.getStatus() == 401) {
+                return new Exception(cause);
+            }
+            return cause;
+        }
+    }
     static OkHttpClient createOkHttpClient(Application app) {
         OkHttpClient client = new OkHttpClient();
 
@@ -63,6 +75,10 @@ public class DomainModule {
         return client;
     }
 
+    @Provides @Singleton ErrorHandler provideErrorHandler() {
+        return new MyErrorHandler();
+    }
+
     @Provides @Singleton OkHttpClient provideOkHttpClient(Application app) {
         return createOkHttpClient(app);
     }
@@ -77,9 +93,11 @@ public class DomainModule {
     }
 
     @Provides @Singleton
-    RestAdapter provideRestAdapter(Endpoint endpoint, Client client) {
+    RestAdapter provideRestAdapter(Endpoint endpoint, Client client, ErrorHandler errorHandler) {
         return new RestAdapter.Builder()
                 .setClient(client)
+                .setErrorHandler(errorHandler)
+                .setConverter(new SimpleXmlConverter())
                 .setEndpoint(endpoint)
                 .build();
     }
@@ -87,5 +105,10 @@ public class DomainModule {
     @Provides @Singleton
     RetrofitStatusService provideRetrofitStatusService(RestAdapter restAdapter) {
         return restAdapter.create(RetrofitStatusService.class);
+    }
+
+    @Provides
+    RetrofitStatusRepository provideRetrofitStatusRepository(RetrofitStatusService service) {
+        return new RetrofitStatusRepository(service);
     }
 }

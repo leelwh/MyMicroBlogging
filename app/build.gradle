@@ -1,12 +1,12 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'retrolambda'
 android {
     compileSdkVersion 21
     buildToolsVersion "21.1.2"
 
     defaultConfig {
         applicationId "com.example.apuser.mymicroblogging"
-        minSdkVersion 19
+        minSdkVersion 15
         targetSdkVersion 21
         versionCode 1
         versionName "1.0"
@@ -17,19 +17,32 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
+retrolambda {
+    jdk '/usr/java/jdk1.8.0_40'
+    oldJdk '/usr/java/jdk1.7.0_71'
+    javaVersion JavaVersion.VERSION_1_7
+}
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.jakewharton:butterknife:6.1.0'
     compile 'com.squareup.okhttp:okhttp:2.1.0'
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.1.0'
-    compile 'com.squareup.retrofit:retrofit:1.8.0'
+    compile 'com.squareup.retrofit:retrofit:1.9.0'
+    compile ('com.mobprofs:retrofit-simplexmlconverter:1.1') {
+            exclude group: 'stax', module: 'stax-api'
+            exclude group: 'stax', module: 'stax'
+            exclude group: 'xpp3', module: 'xpp3'
+    }
     debugCompile 'com.squareup.retrofit:retrofit-mock:1.8.0'
     compile 'com.squareup.picasso:picasso:2.5.0'
     compile 'com.squareup.dagger:dagger:1.2.2'
     provided 'com.squareup.dagger:dagger-compiler:1.2.2'
-
     compile 'io.reactivex:rxjava:1.0.3'
     compile 'io.reactivex:rxandroid:0.23.0'
 }

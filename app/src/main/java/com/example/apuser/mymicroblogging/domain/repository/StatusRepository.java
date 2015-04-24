@@ -4,9 +4,13 @@ import com.example.apuser.mymicroblogging.domain.model.Status;
 
 import java.util.List;
 
+import rx.Observable;
+import rx.Observer;
+import rx.Subscription;
+
 /**
  * Created by apuser on 4/23/15.
  */
 public interface StatusRepository {
-    List<Status> getStatusCollection();
+    Subscription getStatusCollection(Observer<List<Status>> observer);
 }

@@ -6,7 +6,14 @@ import android.view.LayoutInflater;
 
 import com.example.apuser.mymicroblogging.app.MyMicroBloggingApplication;
 import com.example.apuser.mymicroblogging.domain.service.RefreshService;
+import com.example.apuser.mymicroblogging.ui.activity.DetailsActivity;
 import com.example.apuser.mymicroblogging.ui.activity.MainActivity;
+import com.example.apuser.mymicroblogging.ui.activity.SettingsActivity;
+import com.example.apuser.mymicroblogging.ui.activity.StatusActivity;
+import com.example.apuser.mymicroblogging.ui.fragment.DetailsFragment;
+import com.example.apuser.mymicroblogging.ui.fragment.SettingsFragment;
+import com.example.apuser.mymicroblogging.ui.fragment.StatusFragment;
+import com.example.apuser.mymicroblogging.ui.fragment.TimelineFragment;
 
 import javax.inject.Singleton;
 
@@ -21,7 +28,16 @@ import dagger.Provides;
                 DomainModule.class,
         },
         injects = {
+                MyMicroBloggingApplication.class,
                 RefreshService.class,
+                MainActivity.class,
+                DetailsActivity.class,
+                SettingsActivity.class,
+                StatusActivity.class,
+                TimelineFragment.class,
+                StatusFragment.class,
+                SettingsFragment.class,
+                DetailsFragment.class,
         },
         library = true
 )

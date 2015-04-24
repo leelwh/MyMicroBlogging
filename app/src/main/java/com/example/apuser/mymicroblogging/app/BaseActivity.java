@@ -17,8 +17,8 @@ public class BaseActivity extends Activity{
     }
 
     private void injectDependencies() {
-        MyMicroBloggingApplication mvpCleanArchitectureApplication = (MyMicroBloggingApplication) getApplication();
-        mvpCleanArchitectureApplication.inject(this);
+        MyMicroBloggingApplication myMicroBloggingApplication = (MyMicroBloggingApplication) getApplication();
+        myMicroBloggingApplication.inject(this);
     }
 
     private void injectViews() {

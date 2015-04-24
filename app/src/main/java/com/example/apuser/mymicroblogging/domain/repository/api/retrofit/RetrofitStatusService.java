@@ -10,5 +10,5 @@ import rx.Observable;
  */
 public interface RetrofitStatusService {
     @GET("/statuses/friends_timeline.xml")
-    Observable<ResponseStatuses> getStatus();
+    ResponseStatuses getStatus();
 }
