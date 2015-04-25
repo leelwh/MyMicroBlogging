@@ -23,8 +23,7 @@ public class BasePreferenceFragment extends PreferenceFragment {
     }
 
     private void injectDependencies() {
-        MyMicroBloggingApplication mvpCleanArchitectureApplication = (MyMicroBloggingApplication) getActivity().getApplication();
-        mvpCleanArchitectureApplication.inject(this);
+        ((BaseActivity) getActivity()).inject(this);
     }
 
     private void injectViews(View view) {

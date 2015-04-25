@@ -5,6 +5,8 @@ import android.content.Context;
 
 import com.example.apuser.mymicroblogging.app.di.RootModule;
 
+import java.util.List;
+
 import dagger.ObjectGraph;
 
 /**
@@ -18,6 +20,7 @@ public class MyMicroBloggingApplication extends Application{
         super.onCreate();
         objectGraph = ObjectGraph.create(new RootModule(this));
         objectGraph.inject(this);
+        objectGraph.injectStatics();
     }
 
     public void inject(Object object) {
@@ -26,5 +29,13 @@ public class MyMicroBloggingApplication extends Application{
 
     public static MyMicroBloggingApplication get(Context context) {
         return (MyMicroBloggingApplication) context.getApplicationContext();
+    }
+
+    public ObjectGraph plus(List<Object> modules) {
+        if (modules == null) {
+            throw new IllegalArgumentException(
+                    "You can't plus a null module, review your getModules() implementation");
+        }
+        return objectGraph.plus(modules.toArray());
     }
 }

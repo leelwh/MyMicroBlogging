@@ -19,7 +19,10 @@ import com.example.apuser.mymicroblogging.R;
 import com.example.apuser.mymicroblogging.app.BaseListFragment;
 import com.example.apuser.mymicroblogging.domain.repository.StatusContract;
 import com.example.apuser.mymicroblogging.ui.activity.DetailsActivity;
+import com.example.apuser.mymicroblogging.ui.activity.Navigator;
 import com.example.apuser.mymicroblogging.ui.custom.FreshnessView;
+
+import javax.inject.Inject;
 
 
 /**
@@ -36,7 +39,8 @@ public class TimelineFragment extends BaseListFragment implements
             R.id.list_item_freshness };
     private static final int LOADER_ID = 42;
     private SimpleCursorAdapter mAdapter;
-
+    @Inject
+    Navigator navigator;
     private static final ViewBinder VIEW_BINDER = new ViewBinder() {
 
         @Override
@@ -82,8 +86,7 @@ public class TimelineFragment extends BaseListFragment implements
         if (fragment != null && fragment.isVisible()) {
             fragment.updateView(id);
         } else {
-            startActivity(new Intent(getActivity(), DetailsActivity.class)
-                    .putExtra(StatusContract.Column.ID, id));
+            navigator.openDetailsActivity(id);
         }
     }
 

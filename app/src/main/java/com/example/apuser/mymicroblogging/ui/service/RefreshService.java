@@ -1,4 +1,4 @@
-package com.example.apuser.mymicroblogging.domain.service;
+package com.example.apuser.mymicroblogging.ui.service;
 
 import android.app.IntentService;
 import android.content.ContentValues;
@@ -42,7 +42,6 @@ public class RefreshService extends IntentService {
         Log.d(TAG, "onCreated");
     }
 
-    // Executes on a worker thread
     @Override
     protected void onHandleIntent(Intent intent) {
         SharedPreferences prefs = PreferenceManager
@@ -62,7 +61,7 @@ public class RefreshService extends IntentService {
         subscription = retrofitStatusRepository.getStatusCollection(new Observer<List<Status>>() {
             @Override
             public void onCompleted() {
-                Log.d(TAG, "onError");
+                Log.d(TAG, "onCompleted");
             }
 
             @Override
@@ -92,7 +91,7 @@ public class RefreshService extends IntentService {
                     }
                     if (count > 0) {
                         sendBroadcast(new Intent(
-                                "com.marakana.android.yamba.action.NEW_STATUSES").putExtra(
+                                "com.example.apuser.mymicroblogging.action.NEW_STATUSES").putExtra(
                                 "count", count));
                     }
                 }
@@ -107,7 +106,6 @@ public class RefreshService extends IntentService {
 
     @Override
     public void onDestroy() {
-        subscription.unsubscribe();
         super.onDestroy();
         Log.d(TAG, "onDestroyed");
     }

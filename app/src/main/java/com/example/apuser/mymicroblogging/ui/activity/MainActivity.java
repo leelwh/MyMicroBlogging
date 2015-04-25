@@ -8,14 +8,17 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.apuser.mymicroblogging.R;
 import com.example.apuser.mymicroblogging.app.BaseActivity;
 import com.example.apuser.mymicroblogging.domain.model.Status;
 import com.example.apuser.mymicroblogging.domain.repository.StatusContract;
 import com.example.apuser.mymicroblogging.domain.repository.api.retrofit.RetrofitStatusRepository;
-import com.example.apuser.mymicroblogging.domain.service.RefreshService;
+import com.example.apuser.mymicroblogging.ui.MyMicroBloggingUIModule;
+import com.example.apuser.mymicroblogging.ui.service.RefreshService;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -30,11 +33,19 @@ public class MainActivity extends BaseActivity {
     List<Status> timeline = null;
     @Inject
     RetrofitStatusRepository retrofitStatusRepository;
+    @Inject Navigator navigator;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+    }
+
+    @Override
+    protected List<Object> getModules() {
+        LinkedList<Object> modules = new LinkedList<Object>();
+        modules.add(new MyMicroBloggingUIModule());
+        return modules;
     }
 
     @Override
@@ -47,17 +58,17 @@ public class MainActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_settings:
-                startActivity(new Intent(this, SettingsActivity.class));
+                navigator.openSettingsActivity();
                 return true;
             case R.id.action_tweet:
-                startActivity(new Intent("com.com.example.apuser.mymicroblogging.action.tweet"));
+                navigator.openStatusActivity();
                 return true;
             case R.id.action_refresh:
-                refresh();
+                startService(new Intent(this, RefreshService.class));
                 return true;
             case R.id.action_purge:
-//                int rows = getContentResolver().delete(StatusContract.CONTENT_URI, null, null);
-//                Toast.makeText(this, "Deleted " + rows + " rows", Toast.LENGTH_LONG).show();
+                int rows = getContentResolver().delete(StatusContract.CONTENT_URI, null, null);
+                Toast.makeText(this, "Deleted " + rows + " rows", Toast.LENGTH_LONG).show();
                 return true;
             default:
                 return false;

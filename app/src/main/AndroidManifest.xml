@@ -18,7 +18,7 @@
             android:name="com.example.apuser.mymicroblogging.ui.activity.StatusActivity"
             android:label="@string/status_update" >
             <intent-filter>
-                <action android:name="com.com.example.apuser.mymicroblogging.action.tweet" />
+                <action android:name="com.example.apuser.mymicroblogging.action.tweet" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -36,12 +36,42 @@
         </activity>
         <activity android:name="com.example.apuser.mymicroblogging.ui.activity.DetailsActivity" >
         </activity>
-        <service android:name="com.example.apuser.mymicroblogging.domain.service.RefreshService" >
+        <service android:name=".ui.service.RefreshService" >
         </service>
         <provider
             android:name="com.example.apuser.mymicroblogging.domain.provider.StatusProvider"
             android:authorities="com.example.apuser.mymicroblogging.domain.provider.StatusProvider"
             android:exported="false" />
+
+        <receiver android:name="com.example.apuser.mymicroblogging.ui.receiver.BootReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.example.apuser.mymicroblogging.action.UPDATED_INTERVAL" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="com.example.apuser.mymicroblogging.ui.receiver.NotificationReceiver"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.example.apuser.mymicroblogging.action.NEW_STATUSES" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="com.example.apuser.mymicroblogging.ui.widget.MyMicroBloggingWidget"
+            android:exported="false"  >
+            <intent-filter>
+                <action android:name="com.example.apuser.mymicroblogging.action.NEW_STATUSES" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/mymicroblogging_widget" />
+        </receiver>
     </application>
 
 </manifest>

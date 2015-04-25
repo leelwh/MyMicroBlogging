@@ -38,6 +38,6 @@ public class SettingsFragment extends BasePreferenceFragment implements
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
                                           String key) {
-        getActivity().sendBroadcast( new Intent("com.marakana.android.yamba.action.UPDATED_INTERVAL") );
+        getActivity().sendBroadcast( new Intent("com.example.apuser.mymicroblogging.action.UPDATED_INTERVAL") );
     }
 }

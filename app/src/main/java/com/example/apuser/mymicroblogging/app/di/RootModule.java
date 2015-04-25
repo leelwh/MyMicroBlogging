@@ -5,7 +5,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 
 import com.example.apuser.mymicroblogging.app.MyMicroBloggingApplication;
-import com.example.apuser.mymicroblogging.domain.service.RefreshService;
+import com.example.apuser.mymicroblogging.ui.service.RefreshService;
 import com.example.apuser.mymicroblogging.ui.activity.DetailsActivity;
 import com.example.apuser.mymicroblogging.ui.activity.MainActivity;
 import com.example.apuser.mymicroblogging.ui.activity.SettingsActivity;
@@ -29,15 +29,6 @@ import dagger.Provides;
         },
         injects = {
                 MyMicroBloggingApplication.class,
-                RefreshService.class,
-                MainActivity.class,
-                DetailsActivity.class,
-                SettingsActivity.class,
-                StatusActivity.class,
-                TimelineFragment.class,
-                StatusFragment.class,
-                SettingsFragment.class,
-                DetailsFragment.class,
         },
         library = true
 )
