@@ -29,6 +29,7 @@ import dagger.Provides;
         },
         injects = {
                 MyMicroBloggingApplication.class,
+                RefreshService.class,
         },
         library = true
 )

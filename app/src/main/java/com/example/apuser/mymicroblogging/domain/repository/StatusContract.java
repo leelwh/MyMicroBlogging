@@ -14,8 +14,8 @@ public class StatusContract {
     public static final String TABLE = "status";
 
     // Provider specific constants
-    // content://com.marakana.android.yamba.StatusProvider/status
-    public static final String AUTHORITY = "com.example.apuser.mymicroblogging.domain.provider.StatusProvider";
+    // content://com.example.apuser.mymicroblogging.ui.provider.StatusProvider/status
+    public static final String AUTHORITY = "com.example.apuser.mymicroblogging.ui.provider";
     public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY
             + "/" + TABLE);
     public static final int STATUS_ITEM = 1;

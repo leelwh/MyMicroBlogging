@@ -39,8 +39,8 @@
         <service android:name=".ui.service.RefreshService" >
         </service>
         <provider
-            android:name="com.example.apuser.mymicroblogging.domain.provider.StatusProvider"
-            android:authorities="com.example.apuser.mymicroblogging.domain.provider.StatusProvider"
+            android:name=".ui.provider.StatusProvider"
+            android:authorities="com.example.apuser.mymicroblogging.ui.provider.StatusProvider"
             android:exported="false" />
 
         <receiver android:name="com.example.apuser.mymicroblogging.ui.receiver.BootReceiver" >

@@ -17,7 +17,6 @@ import dagger.Module;
  */
 @Module(complete = false,
         injects = {
-                RefreshService.class,
                 MainActivity.class,
                 DetailsActivity.class,
                 SettingsActivity.class,
