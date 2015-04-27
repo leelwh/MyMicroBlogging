@@ -9,11 +9,11 @@ public interface Presenter<T extends View> {
 
     void initialize();
 
-    void onViewCreate();
+    void resume();
 
-    void onViewResume();
+    void pause();
 
-    void onViewDestroy();
+    void destroy();
 
     void setView(T view);
 }

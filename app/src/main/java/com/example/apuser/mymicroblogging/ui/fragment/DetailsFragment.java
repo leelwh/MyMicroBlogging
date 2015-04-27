@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.example.apuser.mymicroblogging.R;
 import com.example.apuser.mymicroblogging.app.BaseFragment;
-import com.example.apuser.mymicroblogging.domain.repository.StatusContract;
+import com.example.apuser.mymicroblogging.ui.provider.StatusContract;
 
 /**
  * Created by apuser on 4/23/15.

@@ -8,14 +8,17 @@ import com.example.apuser.mymicroblogging.domain.repository.api.mapper.StatusRes
 import com.example.apuser.mymicroblogging.domain.repository.api.model.PostStatus;
 import com.example.apuser.mymicroblogging.domain.repository.api.model.ResponseStatus;
 import com.example.apuser.mymicroblogging.domain.repository.api.model.ResponseStatuses;
+import com.example.apuser.mymicroblogging.domain.repository.exception.MyMicroBloggingClientIOException;
 
 import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
 
+import retrofit.client.Response;
 import rx.Observable;
 import rx.Observer;
+import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
@@ -32,20 +35,33 @@ public class RetrofitStatusRepository implements StatusRepository{
     }
 
     @Override
-    public Subscription getStatusCollection(Observer<List<Status>> observer) {
-        Subscription subscription = retrofitStatusService.getStatus()
+    public Observable<List<Status>> getStatusCollection() {
+        return retrofitStatusService.getStatus()
                 .map(statuses -> statuses.getStatuses())
                 .flatMap(statusList -> Observable.from(statusList))
                 .map(new StatusResponseMapper())
                 .toList()
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(observer);
-        return subscription;
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     @Override
-    public void postStatus(String status, String latitude, String longitude) {
-        retrofitStatusService.postStatus(status, latitude, longitude);
+    public Observable<Response> postStatus(String status, String latitude, String longitude) {
+
+        return Observable.create(new Observable.OnSubscribe<Response>() {
+            @Override public void call(Subscriber<? super Response> subscriber) {
+                try {
+                    Response response = retrofitStatusService.postStatus(status, latitude, longitude);
+                    if (response != null) {
+                        subscriber.onCompleted();
+                    } else {
+                        subscriber.onError(new MyMicroBloggingClientIOException("response = null"));
+                    }
+                } catch (Exception e) {
+                    subscriber.onError(new MyMicroBloggingClientIOException("exception", e));
+                }
+            }
+        }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 }

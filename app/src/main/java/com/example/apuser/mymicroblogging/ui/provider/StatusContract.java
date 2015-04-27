@@ -1,4 +1,4 @@
-package com.example.apuser.mymicroblogging.domain.repository;
+package com.example.apuser.mymicroblogging.ui.provider;
 
 import android.net.Uri;
 import android.provider.BaseColumns;
@@ -15,7 +15,7 @@ public class StatusContract {
 
     // Provider specific constants
     // content://com.example.apuser.mymicroblogging.ui.provider.StatusProvider/status
-    public static final String AUTHORITY = "com.example.apuser.mymicroblogging.ui.provider";
+    public static final String AUTHORITY = "com.example.apuser.mymicroblogging.ui.provider.StatusProvider";
     public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY
             + "/" + TABLE);
     public static final int STATUS_ITEM = 1;

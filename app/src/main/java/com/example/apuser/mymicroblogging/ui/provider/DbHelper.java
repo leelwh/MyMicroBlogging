@@ -1,4 +1,4 @@
-package com.example.apuser.mymicroblogging.domain.repository;
+package com.example.apuser.mymicroblogging.ui.provider;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

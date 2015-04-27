@@ -11,9 +11,6 @@ import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.example.apuser.mymicroblogging.domain.repository.DbHelper;
-import com.example.apuser.mymicroblogging.domain.repository.StatusContract;
-
 /**
  * Created by apuser on 4/23/15.
  */

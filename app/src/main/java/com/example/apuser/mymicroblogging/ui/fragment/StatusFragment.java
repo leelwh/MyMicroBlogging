@@ -1,18 +1,11 @@
 package com.example.apuser.mymicroblogging.ui.fragment;
 
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,37 +13,42 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.apuser.mymicroblogging.R;
 import com.example.apuser.mymicroblogging.app.BaseFragment;
-import com.example.apuser.mymicroblogging.domain.repository.api.model.PostStatus;
-import com.example.apuser.mymicroblogging.domain.repository.api.retrofit.RetrofitStatusRepository;
-import com.example.apuser.mymicroblogging.ui.activity.SettingsActivity;
+import com.example.apuser.mymicroblogging.ui.presenter.StatusPresenterImpl;
+import com.example.apuser.mymicroblogging.ui.view.StatusView;
 
 import javax.inject.Inject;
+
+import butterknife.InjectView;
 
 /**
  * Created by apuser on 4/23/15.
  */
-public class StatusFragment extends BaseFragment {
+public class StatusFragment extends BaseFragment implements StatusView {
     private static final String TAG = StatusFragment.class.getSimpleName();
     private static final String PROVIDER = LocationManager.GPS_PROVIDER;
-    private Button mButtonTweet;
-    private EditText mTextStatus;
-    private TextView mTextCount;
     private int mDefaultColor;
-    private LocationManager locationManager;
     private static Location location;
-    @Inject
-    RetrofitStatusRepository retrofitStatusRepository;
+
+    @InjectView(R.id.status_button_tweet) Button mButtonTweet;
+    @InjectView(R.id.status_text) EditText mTextStatus;
+    @InjectView(R.id.status_text_count) TextView mTextCount;
+    @InjectView(R.id.rl_progress) RelativeLayout rl_progress;
+
+    @Inject LocationManager locationManager;
+    @Inject StatusPresenterImpl statusPresenter;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        locationManager = (LocationManager) getActivity().getSystemService(
-                Context.LOCATION_SERVICE);
         location = locationManager.getLastKnownLocation(PROVIDER);
+        statusPresenter.setView(this);
+        statusPresenter.initialize();
     }
 
     @Override
@@ -58,12 +56,20 @@ public class StatusFragment extends BaseFragment {
         super.onResume();
         locationManager.requestLocationUpdates(PROVIDER, 60000, 1000,
                 LOCATION_LISTENER);
+        statusPresenter.resume();
     }
 
     @Override
     public void onPause() {
         super.onPause();
         locationManager.removeUpdates(LOCATION_LISTENER);
+        statusPresenter.pause();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        statusPresenter.destroy();
     }
 
     private static final LocationListener LOCATION_LISTENER = new LocationListener() {
@@ -89,23 +95,22 @@ public class StatusFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_status, null, false);
-
-        mButtonTweet = (Button) v.findViewById(R.id.status_button_tweet);
-        mTextStatus = (EditText) v.findViewById(R.id.status_text);
-        mTextCount = (TextView) v.findViewById(R.id.status_text_count);
         mTextCount.setText(Integer.toString(140));
         mDefaultColor = mTextCount.getTextColors().getDefaultColor();
 
         mButtonTweet.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 String status = mTextStatus.getText().toString();
-                PostTask postTask = new PostTask();
-                postTask.execute(status);
-                Log.d(TAG, "onClicked");
-            }
 
+                if (location != null) {
+                    statusPresenter.postStatus(status, String.valueOf(location.getLatitude()),
+                            String.valueOf(location.getLongitude()));
+                } else {
+                    statusPresenter.postStatus(status,
+                            String.valueOf(Double.NaN), String.valueOf(Double.NaN));
+                }
+            }
         });
 
         mTextStatus.addTextChangedListener(new TextWatcher() {
@@ -139,56 +144,20 @@ public class StatusFragment extends BaseFragment {
         return v;
     }
 
-    class PostTask extends AsyncTask<String, Void, String> {
-        private ProgressDialog progress;
+    @Override
+    public void showPostResult(String message) {
+        Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+    }
 
-        @Override
-        protected void onPreExecute() {
-            progress = ProgressDialog.show(getActivity(), "Posting",
-                    "Please wait...");
-            progress.setCancelable(true);
-        }
+    @Override
+    public void showProcessing() {
+        this.rl_progress.setVisibility(View.VISIBLE);
+        this.getActivity().setProgressBarIndeterminateVisibility(true);
+    }
 
-        // Executes on a non-UI thread
-        @Override
-        protected String doInBackground(String... params) {
-            try {
-                SharedPreferences prefs = PreferenceManager
-                        .getDefaultSharedPreferences(getActivity());
-                String username = prefs.getString("username", "");
-                String password = prefs.getString("password", "");
-
-                if (TextUtils.isEmpty(username) || TextUtils.isEmpty(password)) {
-                    getActivity().startActivity(
-                            new Intent(getActivity(), SettingsActivity.class));
-                    return "Please update your username and password";
-                }
-
-                if (location != null) {
-                    retrofitStatusRepository.postStatus(params[0],
-                            String.valueOf(location.getLatitude()),
-                            String.valueOf(location.getLongitude()));
-                } else {
-                    retrofitStatusRepository.postStatus(params[0],
-                            String.valueOf(Double.NaN), String.valueOf(Double.NaN));
-                }
-
-                Log.d(TAG, "Successfully posted to the cloud: " + params[0]);
-                return "Successfully posted";
-            } catch (Exception e) {
-                Log.e(TAG, "Failed to post to the cloud", e);
-                e.printStackTrace();
-                return "Failed to post";
-            }
-        }
-
-        // Called after doInBackground() on UI thread
-        @Override
-        protected void onPostExecute(String result) {
-            progress.dismiss();
-            if (getActivity() != null && result != null)
-                Toast.makeText(getActivity(), result, Toast.LENGTH_LONG).show();
-        }
-
+    @Override
+    public void hideProcessing() {
+        this.rl_progress.setVisibility(View.GONE);
+        this.getActivity().setProgressBarIndeterminateVisibility(false);
     }
 }

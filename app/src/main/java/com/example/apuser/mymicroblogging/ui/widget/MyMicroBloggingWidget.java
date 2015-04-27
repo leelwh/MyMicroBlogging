@@ -3,7 +3,6 @@ package com.example.apuser.mymicroblogging.ui.widget;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
-import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -13,7 +12,7 @@ import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.example.apuser.mymicroblogging.R;
-import com.example.apuser.mymicroblogging.domain.repository.StatusContract;
+import com.example.apuser.mymicroblogging.ui.provider.StatusContract;
 import com.example.apuser.mymicroblogging.ui.activity.MainActivity;
 
 /**

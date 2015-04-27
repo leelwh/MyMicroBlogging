@@ -2,9 +2,11 @@ package com.example.apuser.mymicroblogging.app.di;
 
 import android.app.Application;
 import android.content.Context;
+import android.location.LocationManager;
 import android.view.LayoutInflater;
 
 import com.example.apuser.mymicroblogging.app.MyMicroBloggingApplication;
+import com.example.apuser.mymicroblogging.app.di.qualifier.ApplicationContext;
 import com.example.apuser.mymicroblogging.ui.service.RefreshService;
 import com.example.apuser.mymicroblogging.ui.activity.DetailsActivity;
 import com.example.apuser.mymicroblogging.ui.activity.MainActivity;
@@ -41,6 +43,7 @@ public class RootModule {
     }
 
     @Provides
+    @ApplicationContext
     @Singleton
     public Context provideApplicationContext() {
         return context;
@@ -55,5 +58,10 @@ public class RootModule {
     @Provides
     public LayoutInflater provideLayoutInflater() {
         return LayoutInflater.from(context);
+    }
+
+    @Singleton @Provides
+    LocationManager provideLocationManager(@ApplicationContext Context context) {
+        return (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
     }
 }

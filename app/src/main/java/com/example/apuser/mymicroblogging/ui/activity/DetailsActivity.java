@@ -5,10 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.apuser.mymicroblogging.app.BaseActivity;
-import com.example.apuser.mymicroblogging.domain.repository.StatusContract;
+import com.example.apuser.mymicroblogging.ui.provider.StatusContract;
 import com.example.apuser.mymicroblogging.ui.MyMicroBloggingUIModule;
 import com.example.apuser.mymicroblogging.ui.fragment.DetailsFragment;
-import com.example.apuser.mymicroblogging.util.StringUtils;
 
 import java.util.LinkedList;
 import java.util.List;
