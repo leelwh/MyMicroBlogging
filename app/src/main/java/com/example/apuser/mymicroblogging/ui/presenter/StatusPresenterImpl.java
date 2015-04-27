@@ -44,7 +44,10 @@ public class StatusPresenterImpl implements StatusPresenter {
     @Override
     public void postStatus(String status, String latitude, String longitude) {
         if (userCheck()) {
-            postStatusUseCase.execute(new DefaultSubscriber<Response>() {
+            postStatusUseCase.setStatus(status)
+                    .setLatitude(latitude)
+                    .setLongitude(longitude)
+                    .execute(new DefaultSubscriber<Response>() {
                 @Override
                 public void onCompleted() {
                     statusView.showPostResult("Successfully posted");
@@ -75,7 +78,6 @@ public class StatusPresenterImpl implements StatusPresenter {
         return true;
     }
 
-    @Override
     public void initialize() {
 
     }

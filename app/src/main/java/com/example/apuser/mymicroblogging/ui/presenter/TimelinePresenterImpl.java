@@ -37,7 +37,6 @@ public class TimelinePresenterImpl implements TimelinePresenter, LoaderManager.L
         this.adapter = adapter;
     }
 
-    @Override
     public void initialize() {
         timelineView.renderTimelineView(adapter, LOADER_ID, this);
     }

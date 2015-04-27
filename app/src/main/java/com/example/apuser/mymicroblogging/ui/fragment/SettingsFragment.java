@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.view.View;
 
 import com.example.apuser.mymicroblogging.R;
 import com.example.apuser.mymicroblogging.app.BasePreferenceFragment;
@@ -17,8 +18,8 @@ public class SettingsFragment extends BasePreferenceFragment implements
     private SharedPreferences prefs;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         addPreferencesFromResource(R.xml.settings);
     }
 

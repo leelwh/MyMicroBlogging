@@ -12,25 +12,34 @@ import android.widget.TextView;
 
 import com.example.apuser.mymicroblogging.R;
 import com.example.apuser.mymicroblogging.app.BaseFragment;
+import com.example.apuser.mymicroblogging.ui.model.StatusModel;
+import com.example.apuser.mymicroblogging.ui.presenter.DetailsPresenterImpl;
 import com.example.apuser.mymicroblogging.ui.provider.StatusContract;
+import com.example.apuser.mymicroblogging.ui.view.DetailsView;
+
+import javax.inject.Inject;
+
+import butterknife.InjectView;
 
 /**
  * Created by apuser on 4/23/15.
  */
-public class DetailsFragment extends BaseFragment {
-    private TextView textUser, textMessage, textCreatedAt;
+public class DetailsFragment extends BaseFragment implements DetailsView {
+    @InjectView(R.id.list_item_text_user) TextView textUser;
+    @InjectView(R.id.list_item_text_message) TextView textMessage;
+    @InjectView(R.id.list_item_text_created_at) TextView textCreatedAt;
+
+    @Inject DetailsPresenterImpl detailsPresenter;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.list_item, null, false);
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        detailsPresenter.setView(this);
+    }
 
-        textUser = (TextView) view.findViewById(R.id.list_item_text_user);
-        textMessage = (TextView) view.findViewById(R.id.list_item_text_message);
-        textCreatedAt = (TextView) view
-                .findViewById(R.id.list_item_text_created_at);
-
-        return view;
+    @Override
+    protected int getFragmentLayout() {
+        return R.layout.list_item;
     }
 
     @Override
@@ -43,29 +52,20 @@ public class DetailsFragment extends BaseFragment {
     }
 
     public void updateView(long id) {
-        if (id == -1) {
+        detailsPresenter.initialize(id);
+    }
+
+    @Override
+    public void renderStatusDetailView(StatusModel statusModel) {
+        if (statusModel != null) {
+            textUser.setText(statusModel.getUser());
+            textMessage.setText(statusModel.getMessage());
+            textCreatedAt.setText(DateUtils.
+                    getRelativeTimeSpanString(statusModel.getCreatedAt()));
+        } else {
             textUser.setText("");
             textMessage.setText("");
             textCreatedAt.setText("");
-            return;
         }
-
-        Uri uri = ContentUris.withAppendedId(StatusContract.CONTENT_URI, id);
-
-        Cursor cursor = getActivity().getContentResolver().query(uri, null,
-                null, null, null);
-        if (!cursor.moveToFirst())
-            return;
-
-        String user = cursor.getString(cursor
-                .getColumnIndex(StatusContract.Column.USER));
-        String message = cursor.getString(cursor
-                .getColumnIndex(StatusContract.Column.MESSAGE));
-        long createdAt = cursor.getLong(cursor
-                .getColumnIndex(StatusContract.Column.CREATED_AT));
-
-        textUser.setText(user);
-        textMessage.setText(message);
-        textCreatedAt.setText(DateUtils.getRelativeTimeSpanString(createdAt));
     }
 }

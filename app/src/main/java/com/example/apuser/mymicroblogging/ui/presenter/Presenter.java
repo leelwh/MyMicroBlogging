@@ -7,8 +7,6 @@ import com.example.apuser.mymicroblogging.ui.view.View;
  */
 public interface Presenter<T extends View> {
 
-    void initialize();
-
     void resume();
 
     void pause();

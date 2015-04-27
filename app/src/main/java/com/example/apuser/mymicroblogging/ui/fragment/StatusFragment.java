@@ -7,10 +7,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -42,14 +39,6 @@ public class StatusFragment extends BaseFragment implements StatusView {
 
     @Inject LocationManager locationManager;
     @Inject StatusPresenterImpl statusPresenter;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        location = locationManager.getLastKnownLocation(PROVIDER);
-        statusPresenter.setView(this);
-        statusPresenter.initialize();
-    }
 
     @Override
     public void onResume() {
@@ -92,9 +81,15 @@ public class StatusFragment extends BaseFragment implements StatusView {
     };
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_status, null, false);
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        initializeStatusView();
+        location = locationManager.getLastKnownLocation(PROVIDER);
+        statusPresenter.setView(this);
+        statusPresenter.initialize();
+    }
+
+    private void initializeStatusView() {
         mTextCount.setText(Integer.toString(140));
         mDefaultColor = mTextCount.getTextColors().getDefaultColor();
 
@@ -138,10 +133,11 @@ public class StatusFragment extends BaseFragment implements StatusView {
             }
 
         });
+    }
 
-        Log.d(TAG, "onCreated");
-
-        return v;
+    @Override
+    protected int getFragmentLayout() {
+        return R.layout.fragment_status;
     }
 
     @Override

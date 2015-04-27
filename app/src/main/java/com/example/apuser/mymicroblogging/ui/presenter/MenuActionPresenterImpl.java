@@ -88,7 +88,6 @@ public class MenuActionPresenterImpl implements MenuActionPresenter {
         int rows = context.getContentResolver().delete(StatusContract.CONTENT_URI, null, null);
     }
 
-    @Override
     public void initialize() {
 
     }
