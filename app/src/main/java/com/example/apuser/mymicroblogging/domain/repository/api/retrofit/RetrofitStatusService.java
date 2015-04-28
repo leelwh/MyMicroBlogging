@@ -1,12 +1,9 @@
 package com.example.apuser.mymicroblogging.domain.repository.api.retrofit;
 
-import com.example.apuser.mymicroblogging.domain.repository.api.model.PostStatus;
 import com.example.apuser.mymicroblogging.domain.repository.api.model.ResponseStatuses;
 
 
-import retrofit.Callback;
 import retrofit.client.Response;
-import retrofit.http.Body;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;

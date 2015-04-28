@@ -14,4 +14,6 @@ public interface Presenter<T extends View> {
     void destroy();
 
     void setView(T view);
+
+    void initialize();
 }

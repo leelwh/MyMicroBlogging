@@ -3,13 +3,9 @@ package com.example.apuser.mymicroblogging.domain.repository.api.mapper;
 import com.example.apuser.mymicroblogging.domain.model.Status;
 import com.example.apuser.mymicroblogging.domain.repository.api.model.ResponseStatus;
 
-import org.xmlpull.v1.XmlPullParserException;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Collections;
 import java.util.Date;
-import java.util.List;
 
 import rx.functions.Func1;
 

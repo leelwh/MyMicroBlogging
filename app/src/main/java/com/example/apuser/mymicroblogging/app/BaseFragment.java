@@ -12,9 +12,10 @@ import butterknife.ButterKnife;
  * Created by apuser on 4/23/15.
  */
 public abstract class BaseFragment extends Fragment{
+
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         injectDependencies();
     }
 

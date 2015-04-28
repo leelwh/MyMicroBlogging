@@ -2,9 +2,7 @@ package com.example.apuser.mymicroblogging.app;
 
 import android.app.ListFragment;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import butterknife.ButterKnife;
 
@@ -13,8 +11,8 @@ import butterknife.ButterKnife;
  */
 public class BaseListFragment extends ListFragment {
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         injectDependencies();
     }
 

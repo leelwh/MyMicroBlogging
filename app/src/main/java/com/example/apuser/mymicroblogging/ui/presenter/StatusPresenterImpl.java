@@ -9,12 +9,9 @@ import android.util.Log;
 import com.example.apuser.mymicroblogging.app.di.qualifier.ActivityContext;
 import com.example.apuser.mymicroblogging.domain.interactor.DefaultSubscriber;
 import com.example.apuser.mymicroblogging.domain.interactor.PostStatusUseCase;
-import com.example.apuser.mymicroblogging.domain.model.Status;
 import com.example.apuser.mymicroblogging.ui.activity.SettingsActivity;
 import com.example.apuser.mymicroblogging.ui.view.StatusView;
 import com.example.apuser.mymicroblogging.ui.view.View;
-
-import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -78,6 +75,7 @@ public class StatusPresenterImpl implements StatusPresenter {
         return true;
     }
 
+    @Override
     public void initialize() {
 
     }

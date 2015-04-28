@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.apuser.mymicroblogging"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 21
         versionCode 1
         versionName "1.0"
@@ -24,8 +24,8 @@ android {
 }
 
 retrolambda {
-    jdk '/Library/Java/JavaVirtualMachines/jdk1.8.0_40.jdk/Contents/Home'
-    oldJdk '/Library/Java/JavaVirtualMachines/jdk1.7.0_65.jdk/Contents/Home'
+    jdk '/usr/java/jdk1.8.0_40'
+    oldJdk '/usr/java/jdk1.7.0_71'
     javaVersion JavaVersion.VERSION_1_7
 }
 dependencies {

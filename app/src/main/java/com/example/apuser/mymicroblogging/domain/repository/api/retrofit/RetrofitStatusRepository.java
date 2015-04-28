@@ -1,27 +1,17 @@
 package com.example.apuser.mymicroblogging.domain.repository.api.retrofit;
 
-import android.util.Log;
-
 import com.example.apuser.mymicroblogging.domain.model.Status;
 import com.example.apuser.mymicroblogging.domain.repository.StatusRepository;
 import com.example.apuser.mymicroblogging.domain.repository.api.mapper.StatusResponseMapper;
-import com.example.apuser.mymicroblogging.domain.repository.api.model.PostStatus;
-import com.example.apuser.mymicroblogging.domain.repository.api.model.ResponseStatus;
 import com.example.apuser.mymicroblogging.domain.repository.api.model.ResponseStatuses;
 import com.example.apuser.mymicroblogging.domain.repository.exception.MyMicroBloggingClientIOException;
 
-import java.util.Collections;
 import java.util.List;
-
-import javax.inject.Inject;
 
 import retrofit.client.Response;
 import rx.Observable;
-import rx.Observer;
 import rx.Subscriber;
-import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -29,7 +19,6 @@ import rx.schedulers.Schedulers;
  */
 public class RetrofitStatusRepository implements StatusRepository{
     private RetrofitStatusService retrofitStatusService;
-    ResponseStatuses responseStatuses;
     public RetrofitStatusRepository(RetrofitStatusService retrofitStatusService) {
         this.retrofitStatusService = retrofitStatusService;
     }

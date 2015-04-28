@@ -58,9 +58,8 @@ public class MenuActionPresenterImpl implements MenuActionPresenter {
 
     private void updateDatabaseAndSendNotification(List<Status> statuses) {
         ContentValues values = new ContentValues();
-        List<Status> timeline  = statuses;
         int count = 0;
-        for (Status status : timeline) {
+        for (Status status : statuses) {
             values.clear();
             values.put(StatusContract.Column.ID, status.getId());
             values.put(StatusContract.Column.USER, status.getUser());
@@ -85,9 +84,10 @@ public class MenuActionPresenterImpl implements MenuActionPresenter {
 
     @Override
     public void purge() {
-        int rows = context.getContentResolver().delete(StatusContract.CONTENT_URI, null, null);
+        context.getContentResolver().delete(StatusContract.CONTENT_URI, null, null);
     }
 
+    @Override
     public void initialize() {
 
     }

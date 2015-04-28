@@ -1,7 +1,5 @@
 package com.example.apuser.mymicroblogging.ui.presenter;
 
-
-import com.example.apuser.mymicroblogging.ui.model.StatusModel;
 import com.example.apuser.mymicroblogging.ui.view.View;
 
 /**

@@ -70,4 +70,9 @@ public class DetailsPresenterImpl implements DetailsPresenter {
     public void setView(View view) {
         detailsView = (DetailsView) view;
     }
+
+    @Override
+    public void initialize() {
+
+    }
 }

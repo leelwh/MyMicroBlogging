@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.example.apuser.mymicroblogging.app.di.qualifier.ActivityContext;
-import com.example.apuser.mymicroblogging.util.StringUtils;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;

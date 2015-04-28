@@ -37,6 +37,7 @@ import retrofit.client.OkClient;
         library = true
 )
 public class DomainModule {
+    private static final String TAG = DomainModule.class.getSimpleName();
     static final int DISK_CACHE_SIZE = 50 * 1024 * 1024; // 50MB
     public static final String PRODUCTION_API_URL = "http://yamba.marakana.com/api/";
     class MyErrorHandler implements ErrorHandler {
@@ -57,6 +58,7 @@ public class DomainModule {
             Cache cache = new Cache(cacheDir, DISK_CACHE_SIZE);
             client.setCache(cache);
         } catch (IOException e) {
+            Log.e(TAG, "createOkHttpClient fail to set cache!");
         }
         client.setAuthenticator(new Authenticator() {
             @Override

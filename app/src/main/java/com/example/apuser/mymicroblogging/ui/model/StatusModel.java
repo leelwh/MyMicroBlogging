@@ -1,7 +1,5 @@
 package com.example.apuser.mymicroblogging.ui.model;
 
-import com.example.apuser.mymicroblogging.ui.provider.StatusContract;
-
 /**
  * Created by mikelee on 4/27/15.
  */

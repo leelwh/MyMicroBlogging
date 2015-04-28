@@ -11,8 +11,8 @@ import butterknife.ButterKnife;
  */
 public class BasePreferenceFragment extends PreferenceFragment {
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         injectDependencies();
     }
 

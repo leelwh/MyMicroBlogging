@@ -19,14 +19,12 @@
             android:label="@string/status_update" >
             <intent-filter>
                 <action android:name="com.example.apuser.mymicroblogging.action.tweet" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity android:name="com.example.apuser.mymicroblogging.ui.activity.MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -42,7 +40,6 @@
             android:name=".ui.provider.StatusProvider"
             android:authorities="com.example.apuser.mymicroblogging.ui.provider.StatusProvider"
             android:exported="false" />
-
         <receiver android:name="com.example.apuser.mymicroblogging.ui.receiver.BootReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />

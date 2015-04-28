@@ -41,6 +41,14 @@ public class StatusFragment extends BaseFragment implements StatusView {
     @Inject StatusPresenterImpl statusPresenter;
 
     @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        location = locationManager.getLastKnownLocation(PROVIDER);
+        statusPresenter.setView(this);
+        statusPresenter.initialize();
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         locationManager.requestLocationUpdates(PROVIDER, 60000, 1000,
@@ -84,9 +92,6 @@ public class StatusFragment extends BaseFragment implements StatusView {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initializeStatusView();
-        location = locationManager.getLastKnownLocation(PROVIDER);
-        statusPresenter.setView(this);
-        statusPresenter.initialize();
     }
 
     private void initializeStatusView() {

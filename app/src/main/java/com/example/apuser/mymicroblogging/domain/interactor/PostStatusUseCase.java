@@ -6,7 +6,6 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import rx.Observable;
-import rx.Subscriber;
 
 /**
  * Created by apuser on 4/27/15.

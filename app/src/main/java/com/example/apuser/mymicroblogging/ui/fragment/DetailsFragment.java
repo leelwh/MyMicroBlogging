@@ -1,13 +1,7 @@
 package com.example.apuser.mymicroblogging.ui.fragment;
 
-import android.content.ContentUris;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.format.DateUtils;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.apuser.mymicroblogging.R;
@@ -32,8 +26,8 @@ public class DetailsFragment extends BaseFragment implements DetailsView {
     @Inject DetailsPresenterImpl detailsPresenter;
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         detailsPresenter.setView(this);
     }
 

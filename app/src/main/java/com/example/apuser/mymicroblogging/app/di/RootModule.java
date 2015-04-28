@@ -8,14 +8,6 @@ import android.view.LayoutInflater;
 import com.example.apuser.mymicroblogging.app.MyMicroBloggingApplication;
 import com.example.apuser.mymicroblogging.app.di.qualifier.ApplicationContext;
 import com.example.apuser.mymicroblogging.ui.service.RefreshService;
-import com.example.apuser.mymicroblogging.ui.activity.DetailsActivity;
-import com.example.apuser.mymicroblogging.ui.activity.MainActivity;
-import com.example.apuser.mymicroblogging.ui.activity.SettingsActivity;
-import com.example.apuser.mymicroblogging.ui.activity.StatusActivity;
-import com.example.apuser.mymicroblogging.ui.fragment.DetailsFragment;
-import com.example.apuser.mymicroblogging.ui.fragment.SettingsFragment;
-import com.example.apuser.mymicroblogging.ui.fragment.StatusFragment;
-import com.example.apuser.mymicroblogging.ui.fragment.TimelineFragment;
 
 import javax.inject.Singleton;
 
